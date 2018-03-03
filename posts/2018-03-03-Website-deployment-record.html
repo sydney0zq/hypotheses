@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Deep Into The Space">
+        <meta name="author" content="Theodorus">
+        <title>Blog website deployment record</title>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=http://chaoxuprime.com/mathjax_conf.js">
+        </script>
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="stylesheet" href="/css/default.css" />
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+    </head>
+    <body class="tex2jax_ignore">
+      <header class="hide-on-print">
+          <div id="blog-title">
+              <a href="/">Deep Into The Space</a>
+          </div>
+          <nav>
+              <ul>
+                  <li><a href="/">Home</a></li>
+                  <li><a href="/src/Resume.pdf">About</a></li>
+                  <li><a href="/src/Resume.pdf">Resume</a></li>
+                  <li><a href="/src/wishlist.html">Wishlist</a></li>
+              </ul>
+          </nav>
+      </header>
+      <article>
+          <h1 id="article-title">Blog website deployment record</h1>
+          <div>
+          <h2>Why I want to write personal blog?</h2>
+<p>Actually I don't really know why I need a blog to record my ideas, my exploration, or my struggle learning way. That's just someday when I was visiting other's blog, the beautiful style attracts me really a lot, and recently there are remarkable changes in my workflow, all of these drives me to write them down.</p>
+<p>I have tried to write blogs formerly, for several times. But I finally cannot insist cause the publication tools are not easy to use, i.e. Hexo or Haskell. This time, I use the CSS and html-template files from that beautiful repostority, and then I code a <code>Render</code> class in python to generate all my html files from markdown ones directly, no more depencies needed. This work costed me about 12 hours, and brings me much enjoyment. And then I bought a domain <code>hypotheses.cc</code> from namesilo(About 8.99 dollars, 56.7 Yuan in RMB), get all stuffs done and then push it on Github. The final visual effect looks very close to the original blog, and I really like it.</p>
+<h2>How to deploy?</h2>
+<p><strong>Aim: Make sure it works on your local machine</strong></p>
+<ul>
+<li>Firstly, we need to modify <code>config.py</code> to set necessary paths, it will be used in <code>build.py</code>.</li>
+<li>Then, write your markdown posts, note the format is really strict. You should follow:<ul>
+<li>All posts md file names are beginning with <code>Year-Month-Day-Your-Post-Name.md</code></li>
+<li>All posts md files start with <code>---\ntitle: Your post title\n---\n</code></li>
+<li>Make all your meta md files exist and are coincident with the code logic</li>
+</ul>
+</li>
+<li>Run <code>python3 build.py</code> to generate all your html static files</li>
+<li>Run <code>python3 -m http.server 8001</code> and visit <code>http://localhost:8001</code> to check your website</li>
+</ul>
+<p><strong>Aim: Deploy to github</strong></p>
+<ul>
+<li>Firstly, you need a custom domain. After you get it from domain service provider, you should set it a <code>AAAA</code> record: i.e. <code>AAAA blog.hypotheses.cc sydney0.github.io</code></li>
+<li>Secondly, you should add one <code>CNAME</code> in your reposority which contains the top domain name i.e. <code>hypotheses.cc</code></li>
+<li>Thirdly, go to your reposority setting, change the domain setting to <code>blog.hypotheses.cc</code> and wait about 5 minutes</li>
+<li>Note, when you use the native github domain, if you set your css path in <code>index.html</code> as <code>'/css/default.css'</code>, it will induce one error that github could not find the file on <code>sydney0zq.github.io/css/default.css</code>, but the actual path is <code>sydney0zq.github.io/hypotheses/css/default.css</code>, but if you modify your template to adapt this troublesome thing, you will get stuck in chaos. So the best way to solve it is just using your custom domain instead of the default one.</li>
+</ul>
+<h2>Coda</h2>
+<p>In this blog, I add my wishlist and resume. Maybe I could add more tabs to record my life. After one month in Beijing, I realize it is so hard to do research but I still love it as long as I am not being pushed. And I would like to search for beautiful things as my primary goal.</p>
+<p>Best wishes.</p>
+<h1>Appendix</h1>
+<p><strong>My 2018 Plan</strong></p>
+<ol>
+<li>
+<p>在12点前睡觉，早上8点之前起床</p>
+</li>
+<li>
+<p>每周至少三次锻炼</p>
+</li>
+<li>
+<p>读最起码10本经典或者有名的书，做完笔记</p>
+<p>a. 给佳西亚的一封信</p>
+<p>b. 深度学习花书</p>
+<p>c. 郎小平的经济书籍</p>
+<p>d. 2部小说</p>
+<p>e. 失控</p>
+<p>...</p>
+</li>
+<li>
+<p>听完吴军的谷歌方法论，做完笔记和反思</p>
+</li>
+<li>
+<p>将存款合理规划，按照比例分配</p>
+</li>
+<li>
+<p>积极找女朋友</p>
+</li>
+<li>
+<p>保护眼睛</p>
+</li>
+</ol>
+<hr />
+<p>方法：</p>
+<ol>
+<li>
+<p>提升效率和保持习惯，将手机放在其他地方</p>
+</li>
+<li>
+<p>设定闹钟，可以先回去然后在小区/学校跑圈</p>
+</li>
+<li>
+<p>找到空余时间去看书，避免时间浪费，找到重心</p>
+</li>
+<li>
+<p>应该系统性的思考和总结</p>
+</li>
+<li>
+<p>设定规则去投资，不要乱投，也不能投太多</p>
+</li>
+<li>
+<p>拓展朋友圈和抓住机会</p>
+</li>
+<li>
+<p>每隔1h出去休息眼睛，硬性要求</p>
+</li>
+</ol>
+<hr />
+<p>行动：</p>
+<p>Just do them, not delay.</p>
+          </div>
+          <div class="info">Posted by Theodorus Zhou on 2018-03-03. </div>
+      </article>
+      <footer class="hide-on-print">© 2010 - <script>document.write(new Date().getFullYear())</script> Theodorus Zhou. Licensed under <a href="http://www.wtfpl.net/txt/copying/">WTFPL v2</a> unless otherwise specified. <a href="/README.html">Blog README</a>.</footer>
+
+    </body>
+</html>
+
+</html>

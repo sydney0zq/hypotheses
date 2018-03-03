@@ -4,14 +4,13 @@ title: README
 
 # A Survey
 
+To be added later.
+
 
 
 # Notes
 
-- Under mac, MathDoc require you to `export LANG=C` for it to work
-- The source of the blog is forked from a [git repository](https://github.com/chaoxu/chaoxu.github.io/tree/develop). 
+- The css of the blog is forked from a [git repository](https://github.com/chaoxu/chaoxu.github.io/tree/develop). 
 
-
-# Deployment Note
 
 
