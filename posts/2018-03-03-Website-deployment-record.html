@@ -33,16 +33,16 @@
           <h1 id="article-title">Blog website deployment record</h1>
           <div>
           <h2>Why I want to write personal blog?</h2>
-<p>Actually I don't really know why I need a blog to record my ideas, my exploration, or my struggle learning way. That's just someday when I was visiting other's blog, the beautiful style attracts me really a lot, and recently there are remarkable changes in my workflow, all of these drives me to write them down.</p>
+<p>Actually I don't really know why I need a blog to record my ideas, exploration, and struggle learning way. That's just someday when I was visiting other's blog, the beautiful style attracted me really a lot, and recently there are remarkable changes in my workflow, all of these drives me to write them down.</p>
 <p>I have tried to write blogs formerly, for several times. But I finally cannot insist cause the publication tools are not easy to use, i.e. Hexo or Haskell. This time, I use the CSS and html-template files from that beautiful repostority, and then I code a <code>Render</code> class in python to generate all my html files from markdown ones directly, no more depencies needed. This work costed me about 12 hours, and brings me much enjoyment. And then I bought a domain <code>hypotheses.cc</code> from namesilo(About 8.99 dollars, 56.7 Yuan in RMB), get all stuffs done and then push it on Github. The final visual effect looks very close to the original blog, and I really like it.</p>
 <h2>How to deploy?</h2>
-<p><strong>Aim: Make sure it works on your local machine</strong></p>
+<p><strong>Aim: Make sure your website works on your local machine</strong></p>
 <ul>
 <li>Firstly, we need to modify <code>config.py</code> to set necessary paths, it will be used in <code>build.py</code>.</li>
-<li>Then, write your markdown posts, note the format is really strict. You should follow:<ul>
+<li>Then, write your markdown posts, note the format is strict. You should follow:<ul>
 <li>All posts md file names are beginning with <code>Year-Month-Day-Your-Post-Name.md</code></li>
 <li>All posts md files start with <code>---\ntitle: Your post title\n---\n</code></li>
-<li>Make all your meta md files exist and are coincident with the code logic</li>
+<li>Make sure all your meta md files exist and are coincident with the code logic</li>
 </ul>
 </li>
 <li>Run <code>python3 build.py</code> to generate all your html static files</li>

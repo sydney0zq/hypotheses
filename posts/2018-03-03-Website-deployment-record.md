@@ -6,7 +6,7 @@ title: Blog website deployment record
 ## Why I want to write personal blog?
 
 
-Actually I don't really know why I need a blog to record my ideas, my exploration, or my struggle learning way. That's just someday when I was visiting other's blog, the beautiful style attracts me really a lot, and recently there are remarkable changes in my workflow, all of these drives me to write them down.
+Actually I don't really know why I need a blog to record my ideas, exploration, and struggle learning way. That's just someday when I was visiting other's blog, the beautiful style attracted me really a lot, and recently there are remarkable changes in my workflow, all of these drives me to write them down.
 
 I have tried to write blogs formerly, for several times. But I finally cannot insist cause the publication tools are not easy to use, i.e. Hexo or Haskell. This time, I use the CSS and html-template files from that beautiful repostority, and then I code a `Render` class in python to generate all my html files from markdown ones directly, no more depencies needed. This work costed me about 12 hours, and brings me much enjoyment. And then I bought a domain `hypotheses.cc` from namesilo(About 8.99 dollars, 56.7 Yuan in RMB), get all stuffs done and then push it on Github. The final visual effect looks very close to the original blog, and I really like it.
 
@@ -15,13 +15,13 @@ I have tried to write blogs formerly, for several times. But I finally cannot in
 ## How to deploy?
 
 
-**Aim: Make sure it works on your local machine**
+**Aim: Make sure your website works on your local machine**
 
 - Firstly, we need to modify `config.py` to set necessary paths, it will be used in `build.py`.
-- Then, write your markdown posts, note the format is really strict. You should follow:
+- Then, write your markdown posts, note the format is strict. You should follow:
 	- All posts md file names are beginning with `Year-Month-Day-Your-Post-Name.md`
 	- All posts md files start with `---\ntitle: Your post title\n---\n`
-	- Make all your meta md files exist and are coincident with the code logic
+	- Make sure all your meta md files exist and are coincident with the code logic
 - Run `python3 build.py` to generate all your html static files
 - Run `python3 -m http.server 8001` and visit `http://localhost:8001` to check your website
 
