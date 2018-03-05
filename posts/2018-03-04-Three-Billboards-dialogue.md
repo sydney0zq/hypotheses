@@ -19,6 +19,19 @@ Kiss the girls for me and know that I've always loved you. And maybe I will see 
 Your boy, Bill...
 
 
+## 01:17:47
+
+Jason, Willoughby here. I'm dead now, sorry about that, but there's something I wanted to say to you that I never really said when I was alive.
+
+I think you've got the makings of being a really good cop, Jason, and you know why? Because, deep down, you are a decent man. I know you don't think I think that, but I do, dipshit.
+
+I do think you're too angry, though... And I know it's all since your dad died and you had to go look after your Mom and all... But as long as you hold onto so much hate then I don't think you're ever going to become... What I know you wanna become... A Detective.
+
+Cos you know what you need to become a detective. And I know you're gonna wince when I say this... But what you need to become a detective is Love. Because through Love comes Calm, and through Calm comes Thought. And you need Thought to detect stuff sometimes, Jason. It's kinda all you need. You don't even need a gun. And you definitely don't need Hate. Hate never solved nothing... But Calm did. And Thought did. Try it. Try it just for a change. No-one will think you'are gay. And if they do, arrest 'em for homophobia. Won't they be surprised! 
+
+Good luck to you, Jason. You're a decent man, and yeah you've had a run of bad luck... But things are gonna change for you... I can feel it.
+
+
 
 
 
