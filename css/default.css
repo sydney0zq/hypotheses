@@ -112,7 +112,7 @@ blockquote {
 
 strong {
     font-weight: bold;
-    color: #734338;
+    /*color: #734338;*/
 }
 
 em {
