@@ -15,6 +15,9 @@ Pheno: My training batch average iou always concusses, and even down to 0 someti
 
 After repairing this mistake, I still find my model is hard to converge, cause the IOU always remain on 0.5 or lower. After a long time struggle, I ask Bily for help.
 
+<br>
+> Note: PyTorch backward function works very well. You could compute `forward(inputs, targets)` and check `inputs.grad` value to ensure your implementation.
+
 ### Firstly, overfit on one sample
 
 First of everything all, you should overfit your model on one single model to determine your **learning rate**, **size average bool**, **epoch number**. You must overfit your model on this single example.

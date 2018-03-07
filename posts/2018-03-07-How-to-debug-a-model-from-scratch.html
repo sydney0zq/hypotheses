@@ -38,6 +38,10 @@
 <h3>Check inputs</h3>
 <p>Pheno: My training batch average iou always concusses, and even down to 0 sometimes. I check my three inputs, <code>batch_x1, batch_x2, batch_y</code>, in <code>train.py</code>. At last I found <code>batch_y</code> is wrong, I fullfill the <code>batch_y</code> only from one fixed sample. So next time, I should check it carefully.</p>
 <p>After repairing this mistake, I still find my model is hard to converge, cause the IOU always remain on 0.5 or lower. After a long time struggle, I ask Bily for help.</p>
+<p><br></p>
+<blockquote>
+<p>Note: PyTorch backward function works very well. You could compute <code>forward(inputs, targets)</code> and check <code>inputs.grad</code> value to ensure your implementation.</p>
+</blockquote>
 <h3>Firstly, overfit on one sample</h3>
 <p>First of everything all, you should overfit your model on one single model to determine your <strong>learning rate</strong>, <strong>size average bool</strong>, <strong>epoch number</strong>. You must overfit your model on this single example.</p>
 <h3>Secondly, overfit on one batch</h3>
