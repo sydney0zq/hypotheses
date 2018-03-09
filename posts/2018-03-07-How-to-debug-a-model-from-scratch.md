@@ -18,6 +18,10 @@ After repairing this mistake, I still find my model is hard to converge, cause t
 <br>
 > Note: PyTorch backward function works very well. You could compute `forward(inputs, targets)` and check `inputs.grad` value to ensure your implementation.
 
+### Training stucks on specified iteration
+
+In my training stage, I found sometimes my model will stuck on some specified iteration but the it still occupy CPU resource. Under this situtation, the best way to solve this issue is that comment module by module, line by line. But note you should be sure you could reproduce the same issue precisely.
+
 ### Firstly, overfit on one sample
 
 First of everything all, you should overfit your model on one single model to determine your **learning rate**, **size average bool**, **epoch number**. You must overfit your model on this single example.
