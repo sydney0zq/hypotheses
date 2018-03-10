@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Deep Into The Space">
+        <meta name="author" content="Theodorus">
+        <title>How to submit job to cluster?</title>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=http://chaoxuprime.com/mathjax_conf.js">
+        </script>
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="stylesheet" href="/css/default.css" />
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+    </head>
+    <body class="tex2jax_ignore">
+      <header class="hide-on-print">
+          <div id="blog-title">
+              <a href="/">Deep Into The Space</a>
+          </div>
+          <nav>
+              <ul>
+                  <li><a href="/">Home</a></li>
+                  <li><a href="/src/Resume.pdf">About</a></li>
+                  <li><a href="/src/Resume.pdf">Resume</a></li>
+                  <li><a href="/src/wishlist.html">Wishlist</a></li>
+              </ul>
+          </nav>
+      </header>
+      <article>
+          <h1 id="article-title">How to submit job to cluster?</h1>
+          <div>
+          <h2>Understand job and HDFS</h2>
+<p>A job is a project to run on GPU Cluster. And HDFS is a distrubtion filesystem which is very large but slow.</p>
+<h2>Procedure</h2>
+<h3>Prepare your code and data</h3>
+<p>Firstly you should make sure your code works fine on your local machine. And if everything goes well, we could get started.</p>
+<p>The first step is create a virtual environment, you could use <code>miniconda</code> or <code>virtualenv</code>, here I use <code>miniconda3</code>, and my working directory is <code>~/JOBENV</code> while the virtual environment directory is <code>~/JOBENV/SOT</code>. After we install miniconda3 in virtual directory, we install necessary packages refered by our project.</p>
+<p>And then you could copy the following <code>job.sh</code> and <code>submit.sh</code> into your job environment.</p>
+<pre> <code>
+#!/bin/bash
+
+cd ${TMPDIR}
+# add PATH and LD_LIBRARY_PATH
+#export LD_LIBRARY_PATH="lib:${LD_LIBRARY_PATH}"
+ls ./
+
+uname -a
+#date
+#env
+date
+
+CWD=`pwd`
+#SAVE_PATH="hdfs://hobot-bigdata/user/cheng.wang/run_output/"
+export PYTHONPATH=${CWD}:$PYTHONPATH
+echo $CWD
+echo $TMPDIR
+#set this to enable reading from hdfs 
+export CLASSPATH=$HADOOP_PREFIX/lib/classpath_hdfs.jar
+export JAVA_TOOL_OPTIONS="-Xms2000m -Xmx10000m"
+
+#variable ${LOCAL_OUTPUT} dir can save data of you job, after exec it will be upload to hadoop_out path 
+./SOT/bin/python PyTorch-GOTURN/train.py
+#./SOT/bin/python open-reid/examples/triplet_loss.py -d market1501 -a resnet50 -b 256 --num-instances 16 --data-dir open-reid/data --logs-dir local_run_output/logs/market1501-resnet50-s00/ --lr 0.0003 --margin 0.5 -j 4 --epochs 160 --combine-trainval --start_save 100 
+</code> </pre>
+
+<p>Here is <code>submit.sh</code>.</p>
+<pre> <code>
+#!/bin/bash
+HDFS=hdfs://hobot-bigdata/
+export HADOOP_PREFIX='/usr/'
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HADOOP_PREFIX/lib/native
+export HADOOP_HOME=/usr/local/hadoop-2.7.2
+export PATH=${HADOOP_HOME}/bin/:${PATH}
+export HADOOP_PREFIX=${HADOOP_HOME}
+export JAVA_HOME=/usr/lib/jvm/java-1.7.0
+export CLASSPATH=$($HADOOP_HOME/bin/hadoop classpath --glob)
+
+JOB_NAME='GOTURN-ALEXNET-ORI-CLUSTER-TEST'
+
+PROJ_DIR='JOBENV'
+
+host=`hostname`
+ids=`date +%Y%m%d%H%M%S`
+job_id="${JOB_NAME}_${ids}"
+echo "Starting Job Submit. Jobid == ${job_id}....."
+
+HADOOP_OUT=/user/qiang.zhou/idea/${job_id}
+#you can save working data to localoutput dir, after exec, this dir will be upload to $HADOOP_OUT
+qsub_i \
+    -N ${job_id} \
+    --hdfs $HDFS  --ugi `whoami`,regular-engineer \
+    --hout $HADOOP_OUT \
+    --files $PROJ_DIR \
+    --localoutput experiments \
+    --pods 4 \
+    -l walltime=256:30:00  \
+    ./$PROJ_DIR/job.sh
+
+echo "Your sys job_name : ${job_id}
+</code> </pre>
+
+<p>The final file tree should be like this:</p>
+<pre><code>
+~
+ +-JOBENV
+ + +-SOT
+ + + +-bin
+ + + +-include
+ + + +-...
+ + + 
+ + +-YourProjectDir
+ + +-job.sh
+ +-submit.sh
+</code></pre>
+
+<p>Before you submit your code, you should RUN it on your local machine to make sure it works well, you also should check your HDFS API.</p>
+<h3>Submit</h3>
+<p>Just use <code>bash submit.sh</code>, this script will create a <code>.tar.gz</code> zipped file to run on cluster machine. And then it will create necessary directories and dump all models to your specified directory in the above scripts.</p>
+          </div>
+          <div class="info">Posted by Theodorus Zhou on 2018-03-09. </div>
+      </article>
+      <footer class="hide-on-print">© 2010 - <script>document.write(new Date().getFullYear())</script> Theodorus Zhou. Licensed under <a href="http://www.wtfpl.net/txt/copying/">WTFPL v2</a> unless otherwise specified. <a href="/README.html">Blog README</a>.</footer>
+
+    </body>
+</html>
+
+</html>
