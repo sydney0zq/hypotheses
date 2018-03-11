@@ -18,6 +18,7 @@ def read(fn):
 
 
 get_date = lambda x: "".join([ y+"-" for y in x.split('/')[-1].split('-')[:3]])[:-1]
+add_break = lambda x: x.replace('\n', '\n<br>')
 
 
 class Render:
