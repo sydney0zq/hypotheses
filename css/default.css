@@ -230,12 +230,12 @@ h1 {
 h2 {
     font-size: 1.2em;
     font-style: italic;
-    font-weight: normal;
+    font-weight: bold;
 }
 h3 {
     font-size: 1.1em;
     font-style: italic;
-    font-weight: bold;
+    font-weight: normal;
 }
 /* You must be doing it wrong... if you use the following headings
 No one need more than 3 levels in a short article... */
