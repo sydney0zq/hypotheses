@@ -7,3 +7,10 @@ title: Long time log about  strange bugs in projects
 
 - You couldn't use `open` function to write content to a file in a class's `__del__` function, it will result in `open NotFound`
 
+
+
+
+
+## Vision
+
+- `io.imread` result is **RGB(MxNx3)**. 
