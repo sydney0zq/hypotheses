@@ -13,4 +13,5 @@ title: Long time log about  strange bugs in projects
 
 ## Vision
 
-- `io.imread` result is **RGB(MxNx3)**. 
+- `io.imread` result is **RGB(MxNx3)** while `cv2.imread` result is **BGR(MxNx3)**. The bridge API is `im=im[..., ::-1]`
+- `Image.open('.jpg').size` is **wxh** while `cv2.imread.shape` is **hxw**

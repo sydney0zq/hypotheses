@@ -38,7 +38,8 @@
 </ul>
 <h2>Vision</h2>
 <ul>
-<li><code>io.imread</code> result is <strong>RGB(MxNx3)</strong>. </li>
+<li><code>io.imread</code> result is <strong>RGB(MxNx3)</strong> while <code>cv2.imread</code> result is <strong>BGR(MxNx3)</strong>. The bridge API is <code>im=im[..., ::-1]</code></li>
+<li><code>Image.open('.jpg').size</code> is <strong>wxh</strong> while <code>cv2.imread.shape</code> is <strong>hxw</strong></li>
 </ul>
           </div>
           <div class="info">Posted by Theodorus Zhou on 2018-03-05. </div>
