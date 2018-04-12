@@ -122,88 +122,103 @@ echo "Your sys job_name : ${job_id}
 <p>After a long time usage of cluster, I began to know the internal mechanism behind the user interface. And in a segmentation coorperated with HuangZilong senior, I developed a more robust and flexible script to submit our jobs.</p>
 <p>You could firstly zip your miniconda3 into a <code>tar.gz</code> file, and then upload it to HDFS, after that when your project runs on remote machine, you could fetch it and then unzip it. Of course you could handle more giga files like so. The goodness of this operation is that you could save a lot of time in submit process and you would never need to re-zip miniconda3.</p>
 <p>Here is our <code>job.sh</code>. Notice <code>JAVA_TOOL_OPTIONS</code> variable, if you enable it, you couldn't use <code>hadoop fs -get</code> commands, which confuses me for a long time.</p>
-<p>```</p>
-<h1>!/bin/bash</h1>
-<p>cd ${TMPDIR}</p>
-<h1>add PATH and LD_LIBRARY_PATH</h1>
-<h1>export LD_LIBRARY_PATH="lib:${LD_LIBRARY_PATH}"</h1>
-<p>uname -a</p>
-<h1>date</h1>
-<h1>env</h1>
-<p>date</p>
-<p>CWD=<code>pwd</code></p>
-<h1>SAVE_PATH="hdfs://hobot-bigdata/user/cheng.wang/run_output/"</h1>
-<p>export PYTHONPATH=${CWD}:$PYTHONPATH
+<pre> <code>
+#!/bin/bash
+cd ${TMPDIR}
+# add PATH and LD_LIBRARY_PATH
+#export LD_LIBRARY_PATH="lib:${LD_LIBRARY_PATH}"
+
+uname -a
+#date
+#env
+date
+
+CWD=`pwd`
+#SAVE_PATH="hdfs://hobot-bigdata/user/cheng.wang/run_output/"
+export PYTHONPATH=${CWD}:$PYTHONPATH
 echo $CWD
-echo $TMPDIR</p>
-<h1>set this to enable reading from hdfs</h1>
-<p>export CLASSPATH=$HADOOP_PREFIX/lib/classpath_hdfs.jar</p>
-<h1>export JAVA_TOOL_OPTIONS="-Xms2000m -Xmx10000m"        # For JNI MXNET</h1>
-<p>HADOOP_BIN_ROOT="hdfs://hobot-bigdata/user/qiang.zhou/bin"
+echo $TMPDIR
+#set this to enable reading from hdfs
+export CLASSPATH=$HADOOP_PREFIX/lib/classpath_hdfs.jar
+#export JAVA_TOOL_OPTIONS="-Xms2000m -Xmx10000m"        # For JNI MXNET
+
+HADOOP_BIN_ROOT="hdfs://hobot-bigdata/user/qiang.zhou/bin"
 hadoop fs -get $HADOOP_BIN_ROOT/miniconda3.tar.gz .
 hadoop fs -get $HADOOP_BIN_ROOT/vgg16-397923af.pth ./$PROJ_BRANCH/models
-hadoop fs -get $HADOOP_BIN_ROOT/cache ./$PROJ_BRANCH</p>
-<h1>ls . -R</h1>
-<p>tar -xzf miniconda3.tar.gz
+hadoop fs -get $HADOOP_BIN_ROOT/cache ./$PROJ_BRANCH
+#ls . -R
+
+tar -xzf miniconda3.tar.gz
 PYTHON_EXE=./miniconda3/bin/python
 SNAPSHOT_DIR=snapshots_coco
-EVALRES_DIR=evaluation_davis17</p>
-<h1>variable ${LOCAL_OUTPUT} dir can save data of you job, after exec it will be upload to hadoop_out path</h1>
-<p>$PYTHON_EXE $PROJ_BRANCH/osmn_coco_pretrain.py --model_save_path local_run_output/$SNAPSHOT_DIR \
+EVALRES_DIR=evaluation_davis17
+
+#variable ${LOCAL_OUTPUT} dir can save data of you job, after exec it will be upload to hadoop_out path
+$PYTHON_EXE $PROJ_BRANCH/osmn_coco_pretrain.py --model_save_path local_run_output/$SNAPSHOT_DIR \
 --max_iters $MAX_ITER \
 --steps $STEPS \
 --learning_rate $LR \
---batch_size $BS</p>
-<h1>--gpu_id $GPUs \</h1>
-<p>$PYTHON_EXE $PROJ_BRANCH/osmn_train_eval.py     --whole_model_path local_run_output/$SNAPSHOT_DIR/osmn_${MAX_ITER}.pth \
+--batch_size $BS
+#--gpu_id $GPUs \
+
+$PYTHON_EXE $PROJ_BRANCH/osmn_train_eval.py     --whole_model_path local_run_output/$SNAPSHOT_DIR/osmn_${MAX_ITER}.pth \
 --result_path local_run_output/$EVALRES_DIR \
 --data_version 2017 \
---save_score</p>
-<h1>--gpu_id $GPUs \</h1>
-<p>$PYTHON_EXE $PROJ_BRANCH/davis_eval.py $PROJ_BRANCH/cache/DAVIS local_run_output/evaluation_davis17 2017 val
-```</p>
+--save_score
+#--gpu_id $GPUs \
+$PYTHON_EXE $PROJ_BRANCH/davis_eval.py $PROJ_BRANCH/cache/DAVIS local_run_output/evaluation_davis17 2017 val
+</code></pre>
+
 <p>This script definately is not suitable for your projects, please read it before you deploy.</p>
 <p>And our <code>submit.sh</code>. <code>job.sh</code> uses some variables exported by our <code>submit.sh</code>.</p>
-<p>```</p>
-<h1>!/bin/bash</h1>
-<p>HDFS=hdfs://hobot-bigdata/
+<pre> <code>
+#!/bin/bash
+HDFS=hdfs://hobot-bigdata/
 export HADOOP_PREFIX='/usr/'
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HADOOP_PREFIX/lib/native
 export HADOOP_HOME=/usr/local/hadoop-2.7.2
 export PATH=${HADOOP_HOME}/bin/:${PATH}
 export HADOOP_PREFIX=${HADOOP_HOME}
 export JAVA_HOME=/usr/lib/jvm/java-1.7.0
-export CLASSPATH=$($HADOOP_HOME/bin/hadoop classpath --glob)</p>
-<p>export GPUs=1
+export CLASSPATH=$($HADOOP_HOME/bin/hadoop classpath --glob)
+
+export GPUs=1
 export BS=8
 export LR='1e-5 1e-6'
 export STEPS='200000 300000'
-export MAX_ITER=300000</p>
-<p>PROJ_DIR="SEGENV"
+export MAX_ITER=300000
+
+
+PROJ_DIR="SEGENV"
 export PROJ_BRANCH="$1"
-[ "$1" == "" ] &amp;&amp; echo -e "Usage:\n\t$0 PROJ_BRANCH" &amp;&amp; exit</p>
-<h1>export JOB_NAME="OSMN~Loss_No_Average~-BS_${BS}<em>LR</em>${LR// /-}<em>Steps</em>${STEPS// /-}"</h1>
-<p>export JOB_NAME="$1-BS_${BS}<em>LR</em>${LR//[ -]/<em>}_Steps</em>${STEPS// /_}"</p>
-<p>echo "***NOTICE the project branch you submit is $1"</p>
-<p>host=<code>hostname</code>
-ids=<code>date +%Y%m%d%H%M%S</code>
+[ "$1" == "" ] && echo -e "Usage:\n\t$0 PROJ_BRANCH" && exit
+#export JOB_NAME="OSMN~Loss_No_Average~-BS_${BS}_LR_${LR// /-}_Steps_${STEPS// /-}"
+export JOB_NAME="$1-BS_${BS}_LR_${LR//[ -]/_}_Steps_${STEPS// /_}"
+
+echo "***NOTICE the project branch you submit is $1"
+
+host=`hostname`
+ids=`date +%Y%m%d%H%M%S`
 job_id="${JOB_NAME}_${ids}"
-echo "Starting Job Submit. Jobid == ${job_id}....."</p>
-<p>HADOOP_OUT=/user/<code>whoami</code>/seg/${job_id}</p>
-<h1>hadoop fs -mkdir -p ${HADOOP_OUT}</h1>
-<h1>hadoop fs -chmod 777 ${HADOOP_OUT}</h1>
-<h1>you can save working data to localoutput dir, after exec, this dir will be upload to $HADOOP_OUT</h1>
-<p>time qsub_i \
+echo "Starting Job Submit. Jobid == ${job_id}....."
+
+HADOOP_OUT=/user/`whoami`/seg/${job_id}
+#hadoop fs -mkdir -p ${HADOOP_OUT}
+#hadoop fs -chmod 777 ${HADOOP_OUT}
+#you can save working data to localoutput dir, after exec, this dir will be upload to $HADOOP_OUT
+time qsub_i \
 -N ${job_id} \
---hdfs $HDFS  --ugi <code>whoami</code>,regular-engineer \
+--hdfs $HDFS  --ugi `whoami`,regular-engineer \
 --hout $HADOOP_OUT \
 --files $PROJ_DIR \
 --localoutput local_run_output \
 --pods ${GPUs} \
 -l walltime=256:30:00  \
-./$PROJ_DIR/job.sh</p>
-<p>echo "Your sys job_name : ${job_id}"
-```</p>
+./$PROJ_DIR/job.sh
+
+echo "Your sys job_name : ${job_id}"
+</code></pre>
+
 <p>These advanced scripts help me a lot and really speed up my projects.</p>
 <h3>Submit</h3>
 <p>Just use <code>bash submit.sh</code>, this script will create a <code>.tar.gz</code> zipped file to run on cluster machine. And then it will create necessary directories and dump all models to your specified directory in the above scripts.</p>

@@ -113,6 +113,7 @@ You could firstly zip your miniconda3 into a `tar.gz` file, and then upload it t
 
 Here is our `job.sh`. Notice `JAVA_TOOL_OPTIONS` variable, if you enable it, you couldn't use `hadoop fs -get` commands, which confuses me for a long time.
 
+
 <pre> <code>
 #!/bin/bash
 cd ${TMPDIR}
@@ -163,6 +164,7 @@ $PYTHON_EXE $PROJ_BRANCH/davis_eval.py $PROJ_BRANCH/cache/DAVIS local_run_output
 This script definately is not suitable for your projects, please read it before you deploy.
 
 And our `submit.sh`. `job.sh` uses some variables exported by our `submit.sh`.
+
 
 <pre> <code>
 #!/bin/bash
