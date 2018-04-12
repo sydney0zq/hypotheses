@@ -113,7 +113,7 @@ You could firstly zip your miniconda3 into a `tar.gz` file, and then upload it t
 
 Here is our `job.sh`. Notice `JAVA_TOOL_OPTIONS` variable, if you enable it, you couldn't use `hadoop fs -get` commands, which confuses me for a long time.
 
-```
+<pre> <code>
 #!/bin/bash
 cd ${TMPDIR}
 # add PATH and LD_LIBRARY_PATH
@@ -158,13 +158,13 @@ $PYTHON_EXE $PROJ_BRANCH/osmn_train_eval.py     --whole_model_path local_run_out
 --save_score
 #--gpu_id $GPUs \
 $PYTHON_EXE $PROJ_BRANCH/davis_eval.py $PROJ_BRANCH/cache/DAVIS local_run_output/evaluation_davis17 2017 val
-```
+</code></pre>
 
 This script definately is not suitable for your projects, please read it before you deploy.
 
 And our `submit.sh`. `job.sh` uses some variables exported by our `submit.sh`.
 
-```
+<pre> <code>
 #!/bin/bash
 HDFS=hdfs://hobot-bigdata/
 export HADOOP_PREFIX='/usr/'
@@ -210,7 +210,7 @@ time qsub_i \
 ./$PROJ_DIR/job.sh
 
 echo "Your sys job_name : ${job_id}"
-```
+</code></pre>
 
 These advanced scripts help me a lot and really speed up my projects.
 
