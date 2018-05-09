@@ -41,6 +41,7 @@
 <li><code>io.imread</code> result is <strong>RGB(MxNx3)</strong> while <code>cv2.imread</code> result is <strong>BGR(MxNx3)</strong>. The bridge API is <code>im=im[..., ::-1]</code></li>
 <li><code>Image.open('.jpg').size</code> is <strong>wxh</strong> while <code>cv2.imread.shape</code> is <strong>hxw</strong></li>
 <li>If save a <strong>mean-sub</strong> image using <code>cv2.imwrite</code>, you will lose the pixels whose value is negative, they will be black. But if you view them online after you subtract mean, you will get a colorful image but not right. <a href="https://ws4.sinaimg.cn/large/006tNc79ly1fpsmbe3zjzj306b06bdfq.jpg">FloatView</a> vs <a href="https://ws2.sinaimg.cn/large/006tNc79gy1fpsmbrasalj306b06b74q.jpg">Uint8View</a></li>
+<li>When try to tranpose a CHW to a HWC tensor, you should never use <code>np.reshape</code>, you should use <code>np.transpose((1, 2, 0))</code> instead. Otherwise you will get a 9x9 cell weird image.</li>
 </ul>
           </div>
           <div class="info">Posted by Theodorus Zhou on 2018-03-05. </div>
