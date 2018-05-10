@@ -17,3 +17,4 @@ title: Long time log about  strange bugs in projects
 - `Image.open('.jpg').size` is **wxh** while `cv2.imread.shape` is **hxw**
 - If save a **mean-sub** image using `cv2.imwrite`, you will lose the pixels whose value is negative, they will be black. But if you view them online after you subtract mean, you will get a colorful image but not right. [FloatView](https://ws4.sinaimg.cn/large/006tNc79ly1fpsmbe3zjzj306b06bdfq.jpg) vs [Uint8View](https://ws2.sinaimg.cn/large/006tNc79gy1fpsmbrasalj306b06b74q.jpg)
 - When try to tranpose a CHW to a HWC tensor, you should never use `np.reshape`, you should use `np.transpose((1, 2, 0))` instead. Otherwise you will get a 9x9 cell weird image.
+- cudaCheckError() failed : invalid device function, it is because when you compile the .cu file, your `compute_arch` is not supporting all functions. Check your `CUDA_ARCH` as a clue, maybe you need add more arch into this variable.
