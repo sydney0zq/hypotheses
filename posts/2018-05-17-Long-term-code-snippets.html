@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Deep Into The Space">
         <meta name="author" content="Theodorus">
-        <title>Long term machine learning basis</title>
+        <title>Long time code snippets</title>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=http://chaoxuprime.com/mathjax_conf.js">
         </script>
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -30,22 +30,16 @@
           </nav>
       </header>
       <article>
-          <h1 id="article-title">Long term machine learning basis</h1>
+          <h1 id="article-title">Long time code snippets</h1>
           <div>
-          <h2>Theory basis</h2>
-<ul>
-<li>PCA is a linear transformation that can be easily learnt in one layer of the network</li>
-</ul>
-<h2>Recall and Precision</h2>
-<p><img alt="" src="http://okye062gb.bkt.clouddn.com/20180417170149_CW6UU9_Screenshot.jpeg" /></p>
-<h2>1x1 convolution for segmentation network</h2>
-<p>Classify for each pixel.</p>
-<h2>FPN architecture</h2>
-<p><img width="70%" src="http://okye062gb.bkt.clouddn.com/20180517104713_diskWP_Screenshot.jpeg" /></p>
-<p>首先我们有一张图片，左边是一个普通的 ResNet 网络，其中的 stride 表示相对于原图分辨率降低了多少，例如 stride=2 代表相对于原图降低了2倍，stride=4相对于原图降低了 4 倍。然后右侧是从每一个 ResNet Block 的 ElementWise 加之后再经过 ReLU，进行 1x1 卷积得到的 feature map，即 M2～M5(Top-Down lateral modules)。之后我们就将M5的分辨率提升一倍加入到 M4 的特征中，依次类推，与此同时，我们利用 3x3 的卷积（因为特征相加之后会有噪声）去得到 P5～P2。这就是 FPN 的基本架构。
-<a href="https://github.com/roytseng-tw/Detectron.pytorch/blob/master/lib/modeling/FPN.py"><strong>代码</strong></a></p>
+          <h2>PyTorch Associated</h2>
+<pre> <code>
+# Weight init: https://github.com/pytorch/pytorch/blob/master/torch/nn/init.py
+from torch.nn import init
+init.constant(self.conv1, 0)
+</code></pre>
           </div>
-          <div class="info">Posted by Theodorus Zhou on 2018-04-17. </div>
+          <div class="info">Posted by Theodorus Zhou on 2018-05-17. </div>
       </article>
       <footer class="hide-on-print">© 2010 - <script>document.write(new Date().getFullYear())</script> Theodorus Zhou. Licensed under <a href="http://www.wtfpl.net/txt/copying/">WTFPL v2</a> unless otherwise specified. <a href="/README.html">Blog README</a>.</footer>
 
