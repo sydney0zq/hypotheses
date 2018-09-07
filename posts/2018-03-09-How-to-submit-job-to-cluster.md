@@ -222,4 +222,9 @@ These advanced scripts help me a lot and really speed up my projects.
 Just use `bash submit.sh`, this script will create a `.tar.gz` zipped file to run on cluster machine. And then it will create necessary directories and dump all models to your specified directory in the above scripts.
 
 
+### Decode k8s cipher tarball
+
+`openssl aes-256-cbc -d -k mmvos -salt -in job.tar.gz.enc | tar xzf -`
+
+
 
