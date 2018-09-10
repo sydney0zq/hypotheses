@@ -220,6 +220,70 @@ echo "Your sys job_name : ${job_id}"
 </code></pre>
 
 <p>These advanced scripts help me a lot and really speed up my projects.</p>
+<p>After several months(Aug 2018), our company developed a new cluster system, therefore my script should be updated as well. And I think it is elegant.</p>
+<pre> <code>
+#!/bin/bash
+
+TIME=`date +%Y%m%d-%H%M`
+### HYPER-PARAM ###
+TRAIN_LR="1e-7"
+TRAIN_ITER="50000"
+
+#read -e -p "JOB_NAME: " -i "masktrack-stage1-fromscratch-usemdnetpreds-wdropout-lr$TRAIN_LR-decayat6wand20w-$TIME" JOB_NAME
+read -e -p "JOB_NAME: " -i "masktrack-stage1-adaptdavis-baseddecaymodel-lr$TRAIN_LR-iter$TRAIN_ITER" JOB_NAME
+[ `echo $JOB_NAME | wc -c` -gt 200 ] && echo "[ERROR] Too long job name..." && exit
+read -e -p "UPLOAD_DIR: " -i "YOUR_UPLOADER_NAME" UPLOAD_DIR
+
+echo -e "\033[34;20m[INFO] checking shadiness files...\033[0m"
+find $UPLOAD_DIR -name "*events.out.tfevents*"
+find $UPLOAD_DIR -name "*.pkl"
+find $UPLOAD_DIR -name "*.pth*"
+echo "******************************************************"
+
+cat <<EOF > automl.yaml
+REQUIRED:
+  JOB_NAME: '${JOB_NAME}'
+  JOB_PASSWD: "YOUR_JOB_PASSWORD"
+  UPLOAD_DIR: "${UPLOAD_DIR}"
+  WORKER_MIN_NUM: 1
+  WORKER_MAX_NUM: 1
+  GPU_PER_WORKER: 1
+  RUN_SCRIPTS: "\${WORKING_PATH}/run_seg.sh"
+
+OPTIONAL:
+  PRIORITY: 5   #[1-5], highest:5
+  #DOCKER_IMAGE: "docker.hobot.cc/dlp/mxnet:runtime-cudnn5.1-cuda8.0-centos7"
+  DOCKER_IMAGE: "docker.hobot.cc/dlp/mxnet:runtime-cudnn7.1-cuda9.2-centos7"
+  WALL_TIME: 7200   # max run minutes: default 7200 = 5days
+EOF
+
+cat << EOF > $UPLOAD_DIR/run_seg.sh
+#! /bin/sh
+
+set -x; uname -a; date
+
+export JAVA_TOOL_OPTIONS=""
+HADOOP_ROOT="hdfs://hobot-bigdata"
+HADOOP_BIN_ROOT="hdfs://hobot-bigdata/user/qiang.zhou/bin"
+
+cd /running_package/$UPLOAD_DIR
+
+time hadoop fs -get \$HADOOP_BIN_ROOT/anaconda3_119.tar .
+time hadoop fs -get \$HADOOP_BIN_ROOT/DAVIS_ALL.tar .
+time tar -xf anaconda3_119.tar
+time tar -xf DAIVS_ALL.tar
+
+/bin/rm -rf ./dataset/DAVIS; mv DAVIS ./dataset/DAVIS
+export PYTHON_EXE=\`readlink -f ./anaconda3/bin/python\`
+
+CUDA_VISIBLE_DEVICES=0 \$PYTHON_EXE train.py --model_save_path experiments/snapshots --max_iters $TRAIN_ITER --steps $TRAIN_ITER --learning_rate $TRAIN_LR --batch_size 32
+mv experiments/snapshots /job_data          # Docker container speciality
+EOF
+
+traincli submit -f automl.yaml -t ./ -d
+#/bin/rm -rf automl.yaml
+</code></pre>
+
 <h3>Submit</h3>
 <p>Just use <code>bash submit.sh</code>, this script will create a <code>.tar.gz</code> zipped file to run on cluster machine. And then it will create necessary directories and dump all models to your specified directory in the above scripts.</p>
 <h3>Decode k8s cipher tarball</h3>
