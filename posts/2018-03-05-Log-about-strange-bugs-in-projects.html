@@ -44,6 +44,9 @@
 <li>When try to tranpose a CHW to a HWC tensor, you should never use <code>np.reshape</code>, you should use <code>np.transpose((1, 2, 0))</code> instead. Otherwise you will get a 9x9 cell weird image.</li>
 <li>cudaCheckError() failed : invalid device function, it is because when you compile the .cu file, your <code>compute_arch</code> is not supporting all functions. Check your <code>CUDA_ARCH</code> as a clue, maybe you need add more arch into this variable.</li>
 </ul>
+<h2>Pure bugs</h2>
+<p>Q1: <code>TypeError: int() argument must be a string, a bytes-like object or a number, not 'Image'</code> when using cropimage lambda function, <code>cropimage = lambda x, bbox: np.array(Image.fromarray(x.astype(np.uint8)).crop(bbox), x.dtype)</code>
+A1: 这是由于bbox太小，导致扣出来一个空的区域，这样的话就会导致在转换的时候出现错误</p>
           </div>
           <div class="info">Posted by Theodorus Zhou on 2018-03-05. </div>
       </article>
