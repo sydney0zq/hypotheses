@@ -73,7 +73,7 @@ init.constant(self.conv1, 0)
 # Tools
 
 - [Generate html table - Bash](../codes/genhtmltable_bash.sh)
-- [Replace half characters to full (Mac)- Python](../codes/enp2cnp.sh)
+- [Replace half characters to full (Mac)- Python](../codes/enp2cnp.py)
 - [Fanfou reader - Python](../codes/fanfou_reader.py)
 
 
