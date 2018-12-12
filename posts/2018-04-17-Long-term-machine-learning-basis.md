@@ -37,6 +37,10 @@ Classify for each pixel.
 
 <hr>
 
+## BN derivation details
+
+[BN detail](https://kevinzakka.github.io/2016/09/14/batch_normalization/)
+
 
 
 
