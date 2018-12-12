@@ -41,6 +41,13 @@ Classify for each pixel.
 
 [BN detail](https://kevinzakka.github.io/2016/09/14/batch_normalization/)
 
+## Misc details
+
+- 标准的BN 是对channel算均值和方差，如图：
+<img width="70%" src="../imgs/20181211-bnmeanvar.png" />
+- 假如有了BN，那么之前的Conv不再需要Bias了
+<img width="70%" src="../imgs/20181212-conv_bias.jpg" />
+
 
 
 
