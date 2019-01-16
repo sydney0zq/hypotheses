@@ -42,6 +42,43 @@
 <p><img alt="" src="../imgs/20180417_precision_recall.jpg" /></p>
 <hr>
 
+<h2>一些琐碎但是非常重要的点</h2>
+<ol>
+<li>
+<p>在分割网络中，最后的输出卷积核如果是一层3x3的话，结果会很不稳定；比较好的办法是一层3x3，再接上一个1x1的卷积进行分类；</p>
+</li>
+<li>
+<p>面对没有padding的小网络的时候，应该在原图上加上一定量的padding，如果不加padding，原图上在边缘的ROI，在ROI feature对应位置会形成一个点或者一条线，这样会导致性能的下降(Discussed with LH at 2019-01-16)；</p>
+</li>
+</ol>
+<hr>
+
+<h2>FPN architecture</h2>
+<p><img width="70%" src="../imgs/20180517_fpn.jpg" /></p>
+<p>首先我们有一张图片，左边是一个普通的 ResNet 网络，其中的 stride 表示相对于原图分辨率降低了多少，例如 stride=2 代表相对于原图降低了2倍，stride=4相对于原图降低了 4 倍。然后右侧是从每一个 ResNet Block 的 ElementWise 加之后再经过 ReLU，进行 1x1 卷积得到的 feature map，即 M2～M5(Top-Down lateral modules)。之后我们就将M5的分辨率提升一倍加入到 M4 的特征中，依次类推，与此同时，我们利用 3x3 的卷积（因为特征相加之后会有噪声）去得到 P5～P2。这就是 FPN 的基本架构。
+<a href="https://github.com/roytseng-tw/Detectron.pytorch/blob/master/lib/modeling/FPN.py"><strong>代码</strong></a></p>
+<hr>
+
+<h2>Learning Rate warming up</h2>
+<ul>
+<li>
+<p><strong>Constant warmup</strong>: In constant warm up , you train the model with a small learning rate for few epochs(usually 5) and then increase the learning rate to “k times learning rate” .However this approach may cause a spike in the training error when the learning rate is changed.</p>
+</li>
+<li>
+<p><strong>Gradual warmup</strong>: As the name suggests , you start with a small learning rate and then gradually increase it by a constant for each epoch till it reaches “k times learning rate”. This approach helps the model to perform better with huge batch sizee, which is in par with the training error of the model trained with smaller batches.</p>
+</li>
+</ul>
+<hr>
+
+<h2>BN derivation details</h2>
+<p><a href="https://kevinzakka.github.io/2016/09/14/batch_normalization/">BN detail</a></p>
+<h2>Misc details</h2>
+<ul>
+<li>标准的BN 是对channel算均值和方差，如图：
+<img width="70%" src="../imgs/20181211-bnmeanvar.png" /></li>
+<li>假如有了BN，那么之前的Conv不再需要Bias了
+<img width="70%" src="../imgs/20181212-conv_bias.jpg" /></li>
+</ul>
 <h2>理解神经网络中通过add的方式融合特征</h2>
 <p><a href="https://www.zhihu.com/question/306213462/answer/562776112">https://www.zhihu.com/question/306213462/answer/562776112</a></p>
 <p>对于两路输入来说，如果是通道数相同且后面带卷积的话，add等价于concat之后对应通道共享同一个卷积核。因此add相当于加了一种prior，当两路输入可以具有“对应通道的特征图语义类似”（可能不太严谨）的性质的时候，可以用add来替代concat，这样更节省参数和计算量（concat是add的2倍）。</p>
@@ -79,36 +116,13 @@
 </ol>
 <hr>
 
-<h2>1x1 convolution for segmentation network</h2>
-<p>Classify for each pixel.</p>
+<h2>关于做研究</h2>
+<p>大二就中 CVPR/ICCV/ECCV/NIPS 是一种怎样的体验？</p>
+<p>A1(2018-04-04):</p>
+<p><a href="https://www.zhihu.com/question/271293179/answer/360192576">https://www.zhihu.com/question/271293179/answer/360192576</a></p>
+<p>我的组里有大二中了ICCV的，不过是二作。一作的话，有两个大二学生差一点中了。要中一作顶会，一般需要一年的训练期（当然还有运气）。因为大一课多，学生一般都是大二上加到我们组的，所以一般在大三上出文章（我们组今年有3位大三同学中了CVPR 2018一作）。这主要是训练周期和课程时间点的问题，导致大二first author比较少（co-author是很多）。好像清华经常大一就加组了，估计会有不少大二就发顶会一作的。</p>
+<p>我感觉一年的周期大概是这样的，掌握基本的代码和学会阅读文章需要3-4个月（对于基础扎实的学生），形成一个问题靠谱的技术路线和论文雏形需要3-4个月，最后，把结果做出来和论文写出来要3-4个月。但是，我和很多导师都有同一个感觉，<strong>就是对于很多本科生即使发表了一作顶会并不意味着研究能力就很强了，主要体现在idea，方向感，学科格局理解等研究的核心要素还是不行。</strong> 这也就需要在博士阶段继续的锤炼。另外，不要把大几就发顶会，这件事情看得太重，这对成为一个excellent researcher没什么必然联系，至少在我的组里不强调这个。虽然这种声音（或者噪声）会很影响本科生的情绪或者产生焦虑。但是还是希望我的学生能内心平静，enjoy research。宁静以致远吧。</p>
 <hr>
-
-<h2>FPN architecture</h2>
-<p><img width="70%" src="../imgs/20180517_fpn.jpg" /></p>
-<p>首先我们有一张图片，左边是一个普通的 ResNet 网络，其中的 stride 表示相对于原图分辨率降低了多少，例如 stride=2 代表相对于原图降低了2倍，stride=4相对于原图降低了 4 倍。然后右侧是从每一个 ResNet Block 的 ElementWise 加之后再经过 ReLU，进行 1x1 卷积得到的 feature map，即 M2～M5(Top-Down lateral modules)。之后我们就将M5的分辨率提升一倍加入到 M4 的特征中，依次类推，与此同时，我们利用 3x3 的卷积（因为特征相加之后会有噪声）去得到 P5～P2。这就是 FPN 的基本架构。
-<a href="https://github.com/roytseng-tw/Detectron.pytorch/blob/master/lib/modeling/FPN.py"><strong>代码</strong></a></p>
-<hr>
-
-<h2>Learning Rate warming up</h2>
-<ul>
-<li>
-<p><strong>Constant warmup</strong>: In constant warm up , you train the model with a small learning rate for few epochs(usually 5) and then increase the learning rate to “k times learning rate” .However this approach may cause a spike in the training error when the learning rate is changed.</p>
-</li>
-<li>
-<p><strong>Gradual warmup</strong>: As the name suggests , you start with a small learning rate and then gradually increase it by a constant for each epoch till it reaches “k times learning rate”. This approach helps the model to perform better with huge batch sizee, which is in par with the training error of the model trained with smaller batches.</p>
-</li>
-</ul>
-<hr>
-
-<h2>BN derivation details</h2>
-<p><a href="https://kevinzakka.github.io/2016/09/14/batch_normalization/">BN detail</a></p>
-<h2>Misc details</h2>
-<ul>
-<li>标准的BN 是对channel算均值和方差，如图：
-<img width="70%" src="../imgs/20181211-bnmeanvar.png" /></li>
-<li>假如有了BN，那么之前的Conv不再需要Bias了
-<img width="70%" src="../imgs/20181212-conv_bias.jpg" /></li>
-</ul>
           </div>
           <div class="info">Posted by Theodorus Zhou on 2018-04-17. </div>
       </article>
