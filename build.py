@@ -13,7 +13,7 @@ from config import RENDER_CONFIG, TEMPLATE_CONFIG
 
 
 def read(fn):
-    with open(fn, "r") as f:
+    with open(fn, "r", encoding='utf-8') as f:
         return f.read()
 
 
@@ -43,14 +43,14 @@ class Render:
         template_post_ = self.template_post
         for i, post in enumerate(self.postlist):
             template_post = template_post_
-            with open(post, "r") as f:
+            with open(post, "r", encoding='utf-8') as f:
                 _, title, _ = f.readline(), f.readline().replace('title: ', '').rstrip('\n'), f.readline()
                 postbody = markdown.markdown(f.read())
             repdict = {'$title$': title, '$htmltitle$': title,
                        '$body$': postbody, '$date$': get_date(post)}
             for key in repdict:
                 template_post = template_post.replace(key, repdict[key])
-            with open(posthtmllist[i], "w") as f:
+            with open(posthtmllist[i], "w", encoding='utf-8') as f:
                 f.write(template_post)
 
     def rend_index(self):
@@ -58,7 +58,7 @@ class Render:
         template_index = self.template_index
         for post in self.postlist:
             template_postitem_ = self.template_postitem
-            with open(post, "r") as f:
+            with open(post, "r", encoding='utf-8') as f:
                 _, title = f.readline(), f.readline().replace('title: ', '').rstrip('\n')
             repdict = {'$url$': "/{}html".format(post[:-2]), '$title$': title, '$date$': get_date(post)}
             #print (repdict)
@@ -66,7 +66,7 @@ class Render:
                 template_postitem_ = template_postitem_.replace(key, repdict[key])
             post_itembody += template_postitem_
         template_index = template_index.replace('$body$', post_itembody)
-        with open(self.indexfn, "w") as f:
+        with open(self.indexfn, "w", encoding='utf-8') as f:
             f.write(template_index)
 
     def rend_meta(self):
@@ -74,13 +74,13 @@ class Render:
         template_meta_ = self.template_meta
         for i, meta in enumerate(self.metamds):
             template_meta = template_meta_
-            with open(meta, "r") as f:
+            with open(meta, "r", encoding='utf-8') as f:
                 _, title, _ = f.readline(), f.readline().replace('title: ', '').rstrip('\n'), f.readline()
                 metabody = markdown.markdown(f.read())
             repdict = {'$title$': title, '$body$': metabody}
             for key in repdict:
                 template_meta = template_meta.replace(key, repdict[key])
-            with open(metahtmllist[i], "w") as f:
+            with open(metahtmllist[i], "w", encoding='utf-8') as f:
                 f.write(template_meta)
 
     def rend_all(self):

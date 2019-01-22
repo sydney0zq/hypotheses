@@ -26,3 +26,9 @@ title: Long time log about  strange bugs in projects
 Q1: "TypeError: int() argument must be a string, a bytes-like object or a number, not 'Image'" when using cropimage lambda function:<br> `cropimage = lambda x, bbox: np.array(Image.fromarray(x.astype(np.uint8)).crop(bbox), x.dtype)`
 <br>A1: 这是由于bbox太小，导致扣出来一个空的区域，这样的话就会导致在转换的时候出现错误
 
+<hr>
+
+Q2: "__CudaPopCallFunctionError" 并且有提示gcc版本过低的信息(ABI 不兼容)
+<br>A2: 问题出在gcc上，不需要重新编译pytorch或者CUDA的套件
+
+
