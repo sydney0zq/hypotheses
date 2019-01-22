@@ -29,6 +29,6 @@ Q1: "TypeError: int() argument must be a string, a bytes-like object or a number
 <hr>
 
 Q2: "__CudaPopCallFunctionError" 并且有提示gcc版本过低的信息(ABI 不兼容)
-<br>A2: 问题出在gcc上，不需要重新编译pytorch或者CUDA的套件
+<br>A2: 问题出在版本不匹配上，根据github中：https://github.com/facebookresearch/maskrcnn-benchmark/issues/367 中的提示，应该保证NVCC的版本和CUDATOOLKIT的版本完全一致，比如9.2对9.2，9.2对9.0就会出现错误。检查CUDATOOLKIT方法就是：conda list | grep cuda。此外ABI不兼容的时候，要自己编译GCC，使用40个线程大概只需要20分钟到30分钟，编译链接：http://www.xieqiang.site/2017/07/31/install-gcc-5.4-without-root/。
 
 
