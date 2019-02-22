@@ -7,6 +7,10 @@ title: Long time log about  strange bugs in projects
 
 - You couldn't use `open` function to write content to a file in a class's `__del__` function, it will result in `open NotFound`
 
+Q1: 登陆SSH之后，然后获取一个新的Shell，在PATH和PYTHONPATH对于python的系统路径没有影响的时候，但是在python的交互模式中的sys.path却出现了以前工程中的路径，检查系统变量等，都没有此路径。
+<br> A1: python获取额外的sys.path源码见~/anaconda3/lib/python3.6/site.py，其中就有加入site-packages包的代码。由于在编译maskrcnn-benchmark的时候编译了RoIAlign，因此编译的时候它自动的加入到~/anaconda3/lib/python3.6/site-packages/roialignxxxx以及~/anaconda3/lib/python3.6/easy_install.pth中，最后通过删除了easy_install.pth中的内容解决的。
+
+<hr>
 
 
 
