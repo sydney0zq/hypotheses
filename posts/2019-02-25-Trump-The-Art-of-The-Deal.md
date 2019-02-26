@@ -193,4 +193,41 @@ atrium: n. 门廊
 symbol: n. 象征；符号；标志
 wreath: n. 花冠；圈状物
 
+
+4:30 P.M. Nicholas Ribis, a New Jersey attorney who handled the licensing of both my Atlantic City casinos, calls to say he's about to leave for Sydney, Australia, to pursue a deal (跟单) I'm considering. He tells me it's a twenty-four-hour flight, and I tell him I'm very glad he's going instead of me.
+
+The deal, however, may be worth the trip. The government of New South Wales is **in the midst of** (正在做...) choosing a company to build and operate what they **envision** (对未来的畅想) as the world's largest casino. We're a front-runner (行业的领跑者) for the job, and Nick is going over to meet with the key government people. He tells me he'll call from Australia as soon as he has any news.
+
+
+5:15 P.M. I call Henry Kanegsberg, the NBC executive (高管) in charge of choosing a new site for the network's headquarters. We've been courting (追逐/泡妞) NBC for more than a year, trying to get them to move to our West Side yards site—seventy-eight acres along the Hudson River that I bought a year ago and on which I've announced plans to build the world's tallest building.
+
+I know Henry has just been shown our latest plans for the site, and I'm following up (继续跟进). I mention that Bloomingdale's is dying to become the anchor store (主力店/旗舰店) in our shopping center, which will **give it real prestige** (给真实的浮华感). I also tell him the city seems very excited about our latest plans. Then I say we expect to get our preliminary approvals in the next several months.
+
+Kanegsberg seems enthusiastic. Before I get off, I also put in a plug (插播一条) for NBC's locating its offices in the world's tallest building. "Think about it," I say. "It's the ultimate symbol."
+
+
+5:45 P.M. My nine-year-old son, Donny, calls to ask when I'll be home. I always take calls from my kids, no matter what I'm doing. I have two others—Ivanka, six, and Eric, three—and as they get older, being a father gets easier. I adore (=like) them all, but I've never been great at playing with toy trucks and dolls. Now, though, Donny is beginning to get interested in buildings and real estate and sports, and that's great.
+
+I tell Donny I'll be home as soon as I can, but he insists on a time. Perhaps he's got my genes: the kid won't take no for an answer.
+
+
+6:30 P.M. After several more calls, I leave the office and take the elevator upstairs to my apartment in the **residential part** (住宅区) of Trump Tower. Of course, I have a tendency to make a few more calls when I get home.
+
+
+pursue a deal:跟单
+in the midst of doing sth: 正在做某事
+envision: vt. 设想
+front-runner: n. 领跑者
+NBC (National Broadcasting Company): 国家广播公司
+in charge of doing sth: 负责某事
+court: vt. 设法获得；追逐
+follow up: 继续跟进
+anchor store: 旗舰店；主力店
+prestige: n. 尊贵；威望
+preliminary approval: 初步一致
+put in a plug: 插播广告
+real estate: 房地产
+have a tendency to do sth: 喜欢做某事；倾向于做某事
+pat sb on the shoulder: 拍拍某人的肩
+
 </pre>

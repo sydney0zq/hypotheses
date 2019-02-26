@@ -7,6 +7,7 @@
 
 import markdown
 import re
+import os
 import os.path as osp
 import glob
 from config import RENDER_CONFIG, TEMPLATE_CONFIG
@@ -19,6 +20,9 @@ def read(fn):
 
 get_date = lambda x: "".join([ y+"-" for y in x.split('/')[-1].split('-')[:3]])[:-1]
 add_break = lambda x: x.replace('\n', '\n<br>')
+
+
+IS_WINDOWS = True if os.name is 'nt' else False
 
 
 class Render:
