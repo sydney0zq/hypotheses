@@ -35,4 +35,9 @@ Q1: "TypeError: int() argument must be a string, a bytes-like object or a number
 Q2: "__CudaPopCallFunctionError" 并且有提示gcc版本过低的信息(ABI 不兼容)
 <br>A2: 问题出在版本不匹配上，根据github中：https://github.com/facebookresearch/maskrcnn-benchmark/issues/367 中的提示，应该保证NVCC的版本和CUDATOOLKIT的版本完全一致，比如9.2对9.2，9.2对9.0就会出现错误。检查CUDATOOLKIT方法就是：conda list | grep cuda。此外ABI不兼容的时候，要自己编译GCC，使用40个线程大概只需要20分钟到30分钟，编译链接：http://www.xieqiang.site/2017/07/31/install-gcc-5.4-without-root/。
 
+<hr>
+
+Q3: 在tmux中使用opencv显示图片(imshow)的时候显示": cannot connect to X server :28.0"，但是不使用tmux就可以显示。
+<br>A3: 这是因为tmux无法模拟，具体可以看：[tmux-opencv-imshow-question](https://stackoverflow.com/questions/39840184/python-code-crashes-with-cannot-connect-to-x-server-when-detaching-sshtmux-se)
+
 
