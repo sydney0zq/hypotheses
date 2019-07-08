@@ -47,6 +47,7 @@
 <li>If save a <strong>mean-sub</strong> image using <code>cv2.imwrite</code>, you will lose the pixels whose value is negative, they will be black. But if you view them online after you subtract mean, you will get a colorful image but not right. <a href="https://ws4.sinaimg.cn/large/006tNc79ly1fpsmbe3zjzj306b06bdfq.jpg">FloatView</a> vs <a href="https://ws2.sinaimg.cn/large/006tNc79gy1fpsmbrasalj306b06b74q.jpg">Uint8View</a></li>
 <li>When try to tranpose a CHW to a HWC tensor, you should never use <code>np.reshape</code>, you should use <code>np.transpose((1, 2, 0))</code> instead. Otherwise you will get a 9x9 cell weird image.</li>
 <li>cudaCheckError() failed : invalid device function, it is because when you compile the .cu file, your <code>compute_arch</code> is not supporting all functions. Check your <code>CUDA_ARCH</code> as a clue, maybe you need add more arch into this variable.</li>
+<li>maskrcnnbenchmark框架在集群上跑不通可能是因为<code>SOLVER.IMS_PER_BATCH</code>没有被作为一个参数传入，以及tee的使用也会导致GPU卡死</li>
 </ul>
 <h2>Pure bugs</h2>
 <p>Q1: "TypeError: int() argument must be a string, a bytes-like object or a number, not 'Image'" when using cropimage lambda function:<br> <code>cropimage = lambda x, bbox: np.array(Image.fromarray(x.astype(np.uint8)).crop(bbox), x.dtype)</code>
