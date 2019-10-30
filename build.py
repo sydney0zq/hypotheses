@@ -43,6 +43,7 @@ class Render:
             - $body$
             - $date$
         """
+        print ("[INFO] Rendering posts...")
         posthtmllist = [ x[:-3]+".html" for x in self.postlist ]
         template_post_ = self.template_post
         for i, post in enumerate(self.postlist):
@@ -58,6 +59,7 @@ class Render:
                 f.write(template_post)
 
     def rend_index(self):
+        print ("[INFO] Rendering index...")
         post_itembody = ""
         template_index = self.template_index
         for post in self.postlist:
@@ -74,6 +76,7 @@ class Render:
             f.write(template_index)
 
     def rend_meta(self):
+        print ("[INFO] Rendering meta...")
         metahtmllist = [x[:-3] + ".html" for x in self.metamds]
         template_meta_ = self.template_meta
         for i, meta in enumerate(self.metamds):
