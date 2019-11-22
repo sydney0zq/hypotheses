@@ -4,7 +4,7 @@ import os.path as osp
 TEMPLATE_PREFIX = "templates"
 
 RENDER_CONFIG = {
-    'metamds': ['README.md', '404.md', 'src/wishlist.md'],
+    'metamds': ['README.md', '404.md', 'src/wishlist.md', 'src/biography.md'],
     'postdir': 'posts',
     'indexfn': 'index.html'
 }
