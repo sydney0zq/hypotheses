@@ -1,10 +1,5 @@
----
-title: README
----
 
-# Notes
+## Love, Think and Past
 
-- The css of the blog is forked from a [git repository](https://github.com/chaoxu/chaoxu.github.io/tree/develop). 
-
-
+[Note] The css of the blog is forked from [here](https://github.com/chaoxu/chaoxu.github.io/tree/develop). 
 
